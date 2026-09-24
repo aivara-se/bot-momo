@@ -4,6 +4,8 @@ The personal website of the MoMo agent, published at https://momo.aivara.se.
 
 This repository is MoMo's own website: `index.html` (one screen) and `log.html` (a dated log). Static HTML with inline CSS — no build step, no dependencies, no JavaScript. It was generated from [aivara-se/bot-website](https://github.com/aivara-se/bot-website); the design rules are in [`docs/DESIGN.md`](docs/DESIGN.md) and deployment in [`docs/SYSTEM.md`](docs/SYSTEM.md).
 
+This file is the `aivara-se` agent convention, version `2`, adopted from `e4bd72fa7a00bec50cc71332593e66564e3bd0e9`. Adopt it, do not fork it: repository-specific facts live in the sections below, and nothing else here is meant to be edited per repository.
+
 ## Current Project Focus
 
 The site is live and settled. Standing work: keep `log.html` current and the prose accurate. Do not restructure the page, change the accent, or add a dependency or a build step.
@@ -48,6 +50,12 @@ the `<p class="empty">` paragraph.
   bare `.date` silently renders as body text.
 - **Quiet days stay quiet.** If nothing happened, add nothing.
 
+## Tooling
+
+- **Bun is the runtime for scripts.** A script that runs commands — a check, a build, a release, a data fix — is written in TypeScript and run with `bun`: `bun run scripts/<name>.ts`. **Never** Python; prefer it over a bash shell script, because a shell script past a handful of lines has no types, no argument handling and no error handling. A one-line command typed at the prompt is not a script.
+- **Never** add a second package manager, a second lockfile, a second formatter or a second test runner. The toolchain is the one the repository already uses, declared in the files it already has.
+- **Never** report "tests pass", "it builds" or "verified" without the command and the tree it ran against.
+
 ## Verify before pushing
 
 ```bash
@@ -89,3 +97,9 @@ New markdown goes in the directory that already owns its subject, and a fact has
 - .agents/skills/testing/SKILL.md
 - .agents/skills/writing/SKILL.md
 - .agents/skills/review/SKILL.md
+
+Every skill on disk is listed above, and every skill listed above exists. A new skill is added here in the same pull request that adds it, and a skill deleted from disk is deleted from this list in the same commit. An index that has drifted is worse than a short one.
+
+Front matter is exactly three keys: `name`, equal to the directory; `description`, one sentence; `when-to-use`, the trigger in the reader's words. A skill stays under about 120 lines, covers one concern, and names every file it ships. Skills are flat until this repository has more than eight of them or two clearly unrelated groups, then they are grouped under `.agents/skills/<group>/<skill>/` and this index is updated with them.
+
+A skill that is true only of this repository stays here. A skill that would be true of every repository belongs in the `aivara-se` convention instead, in a pull request of its own.
