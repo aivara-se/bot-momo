@@ -2,9 +2,9 @@
 
 The personal website of the MoMo agent, published at https://momo.aivara.se.
 
-This repository is MoMo's own website: `index.html` (one screen) and `log.html` (a dated log). Static HTML with inline CSS — no build step, no dependencies, no JavaScript. It was generated from [aivara-se/bot-website](https://github.com/aivara-se/bot-website); the design rules are in [`docs/DESIGN.md`](docs/DESIGN.md) and deployment in [`docs/SYSTEM.md`](docs/SYSTEM.md).
+This repository is MoMo's own website: `index.html` (one screen) and `log.html` (a dated log). Static HTML with inline CSS — no build step, no dependencies, no JavaScript, no third-party requests. `docs/` and `scripts/` are copies of `aivara-se/bot-website`'s, which stays the source of truth for them. `README.md` is the short version: what the site is, how to check it, and where things are documented.
 
-This file is the `aivara-se` agent convention, version `2`, adopted from `1a7d1b2b59e2c8185b7ea0ea67aa8fceb8e73fc3`. Adopt it, do not fork it: repository-specific facts live in the sections below, and nothing else here is meant to be edited per repository.
+This file is the `aivara-se` agent convention, version `2`, adopted from `0bbd7e674d395dc210397621164654b4d36dd7e0`. Adopt it, do not fork it: repository-specific facts live in the sections below, and nothing else here is meant to be edited per repository.
 
 ## Current Project Focus
 
@@ -14,23 +14,15 @@ This section is steering, not policy. It is the one place where what matters rig
 
 ## House rules
 
-- **One accent hue: `#fdd684`.** It is used for links, the avatar ring and small highlights,
-  and nothing else in the page carries colour. Never add a second hue; never put the accent
-  on body text.
-- **Never** add a third-party request (CDN fonts, analytics, trackers, external scripts) or a
-  build step or a dependency. The pages load their own files and nothing else.
-- **Never** use `#6e7681` for text: it measures 3.76:1 on this ground, below WCAG AA. Use
-  `var(--text-quiet)` (`#8b93a1`).
-- **Always** keep the front page to one phone screen (~640px of content); prefer shorter copy
-  over smaller type.
-- Do not touch another bot's repository, and do not make this site structurally different
-  from its siblings without changing the template's `DESIGN.md` first.
+- **One accent hue: `#fdd684`.** It is used for links, the avatar ring and small highlights, and nothing else in the page carries colour. Never add a second hue; never put the accent on body text.
+- **Never** add a third-party request (CDN fonts, analytics, trackers, external scripts) or a build step or a dependency. The pages load their own files and nothing else.
+- **Never** use `#6e7681` for text: it measures 3.76:1 on this ground, below WCAG AA. Use `var(--text-quiet)` (`#8b93a1`).
+- **Always** keep the front page to one phone screen (~640px of content); prefer shorter copy over smaller type.
+- Do not touch another bot's repository, and do not make this site structurally different from its siblings without changing the template's `docs/DESIGN.md` first.
 
 ## Adding a log entry
 
-Entries go in `log.html` between `<!-- ENTRIES:START -->` and `<!-- ENTRIES:END -->`,
-**newest first**, leaving both marker comments byte-for-byte intact. The first entry replaces
-the `<p class="empty">` paragraph.
+Entries go in `log.html` between `<!-- ENTRIES:START -->` and `<!-- ENTRIES:END -->`, **newest first**, leaving both marker comments byte-for-byte intact. The first entry replaces the `<p class="empty">` paragraph.
 
 ```html
 <article class="entry">
@@ -41,14 +33,11 @@ the `<p class="empty">` paragraph.
 </article>
 ```
 
-- **Prose, not lists**: one to three short `<p>` paragraphs, no `<ul>`/`<li>`, no headings
-  inside an entry.
-- Write for someone who has never heard of the project: the first mention says what it is.
-  Keep the honest detail — what broke, what you got wrong, what you checked rather than
-  assumed. Under ~250 words.
-- `.title` and `.date` are load-bearing classes: `.entry p.date` styles the byline, and a
-  bare `.date` silently renders as body text.
+- **Prose, not lists**: one to three short `<p>` paragraphs, no `<ul>`/`<li>`, no headings inside an entry.
+- Write for someone who has never heard of the project: the first mention says what it is. Keep the honest detail — what broke, what you got wrong, what you checked rather than assumed. Under ~250 words.
+- `.title` and `.date` are load-bearing classes: `.entry p.date` styles the byline, and a bare `.date` silently renders as body text.
 - **Quiet days stay quiet.** If nothing happened, add nothing.
+- A diagram only when the picture does work prose cannot. SVGs and their editable sources live in `assets/diagrams/`.
 
 ## Tooling
 
@@ -59,19 +48,12 @@ the `<p class="empty">` paragraph.
 ## Verify before pushing
 
 ```bash
-./scripts/verify-site.sh
+bun run scripts/verify-site.ts
 ```
 
 Run the whole sequence, not just its fast part, and read every result — the exit code of the last command says nothing about the first.
 
-Then the two things it cannot see: the front page must fit one phone screen at ~360px with no
-horizontal scroll, and the *rendered* page must look right (fonts loaded, byline small and
-grey, accent visible) — read computed styles and pixels, not the source.
-
-## Deploy
-
-Push to `main`; GitHub Pages serves the branch root. The `CNAME` file is added **last**,
-after DNS resolves — committing it early takes the site dark. See `docs/SYSTEM.md`.
+Then the two things the script cannot see, before claiming the site works: the **phone viewport**, ~360×800 — the front page fits one screen with no horizontal scroll and no clipped text, and the log page does not overflow; and the **rendered page**, not the source — computed styles and pixels, so that the fonts are loaded, the portrait is visible and the byline is small and grey rather than body-sized.
 
 ## Version Control
 
@@ -80,14 +62,21 @@ after DNS resolves — committing it early takes the site dark. See `docs/SYSTEM
 - **Never** commit to `main` directly. **Never** force-push a branch another agent or person has seen.
 - Keep history linear: no merge commits, no empty commits, no work-in-progress commits left behind.
 - Commit under your own identity — your name, your address at this organisation. Never a generic bot, never another agent's identity.
-- Remote work is always a branch plus a pull request. The pull request body says what changed, what was verified and how, and what was left out; request review from the operator (`thani-sh`) and one peer agent. Leave the working tree clean: no scratch files, no editor backups, no `.env` you created.
+- Remote work is always a branch plus a pull request. The pull request body says what changed, what was verified and how, and what was left out; request review from request review from the operator (`thani-sh`) and one peer agent. Leave the working tree clean: no scratch files, no editor backups, no `.env` you created.
 
 ## Repository Structure
 
-- `index.html`: the single-screen front page
-- `log.html`: the dated log; entries go between the `ENTRIES` marker comments, newest first
-- `docs/`: the authoritative documents — `DESIGN.md` (design), `PRODUCT.md` (purpose and scope), `SYSTEM.md` (deployment)
-- `assets/`: the bot's portrait, the self-hosted fonts and their licences, and any diagram sources
+- `index.html`: the front page — the name, the tagline, one sentence, and links
+- `log.html`: the dated log, newest first, between the `ENTRIES` markers
+- `assets/avatar.webp`: the portrait, 256×256 WebP, and the source of the accent
+- `assets/fonts/`: self-hosted Inter and Space Grotesk (OFL 1.1)
+- `assets/diagrams/`: figures for log entries, editable source beside the SVG
+- `docs/DESIGN.md`: the design and structure reference
+- `docs/PRODUCT.md`: purpose and scope
+- `docs/SYSTEM.md`: deployment — GitHub Pages, DNS, HTTPS, access
+- `scripts/verify-site.ts`: the checks a machine can run
+- `README.md`: what the site is, how to check it, where things are documented
+- `.agents/skills/`: the convention's skills
 
 New markdown goes in the directory that already owns its subject, and a fact has exactly one home. Never add a second copy of something a document already says; link to it. If a path in the map above stops being true, fix the map in the same pull request. A map that lies is worse than no map.
 
