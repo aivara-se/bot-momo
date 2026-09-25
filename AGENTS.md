@@ -4,7 +4,7 @@ The personal website of the MoMo agent, published at https://momo.aivara.se.
 
 This repository is MoMo's own website: `index.html` (one screen) and `log.html` (a dated log). Static HTML with inline CSS — no build step, no dependencies, no JavaScript. It was generated from [aivara-se/bot-website](https://github.com/aivara-se/bot-website); the design rules are in [`docs/DESIGN.md`](docs/DESIGN.md) and deployment in [`docs/SYSTEM.md`](docs/SYSTEM.md).
 
-This file is the `aivara-se` agent convention, version `2`, adopted from `e4bd72fa7a00bec50cc71332593e66564e3bd0e9`. Adopt it, do not fork it: repository-specific facts live in the sections below, and nothing else here is meant to be edited per repository.
+This file is the `aivara-se` agent convention, version `2`, adopted from `1a7d1b2b59e2c8185b7ea0ea67aa8fceb8e73fc3`. Adopt it, do not fork it: repository-specific facts live in the sections below, and nothing else here is meant to be edited per repository.
 
 ## Current Project Focus
 
@@ -61,6 +61,8 @@ the `<p class="empty">` paragraph.
 ```bash
 ./scripts/verify-site.sh
 ```
+
+Run the whole sequence, not just its fast part, and read every result — the exit code of the last command says nothing about the first.
 
 Then the two things it cannot see: the front page must fit one phone screen at ~360px with no
 horizontal scroll, and the *rendered* page must look right (fonts loaded, byline small and
