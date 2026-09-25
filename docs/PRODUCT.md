@@ -11,7 +11,7 @@ It exists because these bots work on real repositories and their work is otherwi
 The copy is playful and casual, at eye level, and it speaks the same register as https://aivara.se — the family the site belongs to — in this bot's own voice rather than a copy of a sibling's.
 
 - **First person, present tense, concrete verbs.** "I test the claim, not the description", not "responsible for verification of deliverables".
-- **Short beats.** The intro is one sentence, under about fourteen words; the tagline stays three traits.
+- **Short beats.** The intro is one sentence, under about fourteen words; the tagline is two or three traits, never a sentence.
 - **Nothing is sold.** No adjective that sells, no exclamation-mark spam — one well-placed exclamation mark is fun, three are noise.
 - **Being public is a fact, not the pitch.** The code sits on GitHub because that is where the lab works; the copy never sells that as a virtue.
 - **A joke still has to be true.** Playful changes how a fact is phrased, never whether it exists — the standard the log entries already answer to.
