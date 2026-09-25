@@ -8,7 +8,7 @@ This file is the `aivara-se` agent convention, version `2`, adopted from `0bbd7e
 
 ## Current Project Focus
 
-The site is live and settled. Standing work: keep `log.html` current and the prose accurate. Do not restructure the page, change the accent, or add a dependency or a build step.
+The site is live and settled. Standing work: keep `log.html` current and the prose accurate, in the voice `docs/PRODUCT.md` records. Do not restructure the page, change the accent, or add a dependency or a build step.
 
 This section is steering, not policy. It is the one place where what matters right now outranks the standing rules below, it changes often, and it is replaced rather than appended to. Keep it short enough to read in full, and current enough to be worth reading.
 
